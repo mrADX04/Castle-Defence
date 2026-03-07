@@ -96,10 +96,10 @@ public partial class GridManager : Node2D
             //Also, Instead of Vector2, Vector2I is used to restrict the coordinates to integers, which is necessary for indexing the grid array.
             Vector2I cell = GetCellFromWorld(mousePos);
 
-            if (IsCellFree(cell.X, cell.Y))
+            if (IsCellOccupied(cell.X, cell.Y))
             {
                 Vector2 spawnPos = GetWorldPositionFromCell(cell.X, cell.Y);
-                GD.Print("Place Tower at: " + spawnPos);
+                GD.Print("Placed Tower at: " + spawnPos);
                 SetCellOccupied(cell.X, cell.Y);
             }
             else
@@ -125,7 +125,7 @@ public partial class GridManager : Node2D
         return new Vector2(x, y);
     }
 
-    public bool IsCellFree(int row, int column) //Function to check if a cell is occupied or not. It returns true if the cell is free (not occupied) and false if it is occupied.
+    public bool IsCellOccupied(int row, int column) //Function to check if a cell is occupied or not. It returns true if the cell is free (not occupied) and false if it is occupied.
     {
         return !gridOccupied[row, column];
     }
