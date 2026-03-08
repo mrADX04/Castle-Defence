@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{1E565B7C-184B-4B49-B52E-F924C7F11C74}|Castle Defence.csproj|e:\\projects\\godot\\castle-defence\\scripts\\gridmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1E565B7C-184B-4B49-B52E-F924C7F11C74}|Castle Defence.csproj|solutionrelative:scripts\\gridmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\Godot\\castle-defence\\scripts\\Tower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:scripts\\Tower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -24,9 +28,22 @@
               "RelativeDocumentMoniker": "scripts\\GridManager.cs",
               "ToolTip": "E:\\Projects\\Godot\\castle-defence\\scripts\\GridManager.cs",
               "RelativeToolTip": "scripts\\GridManager.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAQwC0AAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwI8AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-05T09:35:18.636Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Tower.cs",
+              "DocumentMoniker": "E:\\Projects\\Godot\\castle-defence\\scripts\\Tower.cs",
+              "RelativeDocumentMoniker": "scripts\\Tower.cs",
+              "ToolTip": "E:\\Projects\\Godot\\castle-defence\\scripts\\Tower.cs",
+              "RelativeToolTip": "scripts\\Tower.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-07T05:04:54.799Z",
               "EditorCaption": ""
             }
           ]

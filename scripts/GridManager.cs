@@ -11,11 +11,11 @@ public partial class GridManager : Node2D
 
     private Vector2I hoveredCell = new Vector2I(-1, -1); //Stores the currently hovered cell coordinates. Initialized to (-1, -1) to indicate that no cell is currently hovered.
 
-    private bool[,] gridOccupied;
+    private Tower[,] towers;
 
     public override void _Ready()
     {
-        gridOccupied = new bool[Rows, Columns];
+        towers = new Tower[Rows, Columns];
 
         QueueRedraw(); // draw debug grid, also a default method in Godot. It schedules a redraw of the node, which will call the _Draw() method. We use it here to ensure our grid is drawn when the scene starts.
     }
@@ -88,7 +88,9 @@ public partial class GridManager : Node2D
 
     public override void _Input(InputEvent @event)  //detect mouse clicks to place towers(or Units)
     {
-        if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
+        if (@event is InputEventMouseButton mouseEvent
+            && mouseEvent.Pressed
+            && mouseEvent.ButtonIndex == MouseButton.Left) //This detects only left mouse button clicks. Not right clicks or other mouse buttons.
         {
             Vector2 mousePos = GetGlobalMousePosition();
 
@@ -96,15 +98,24 @@ public partial class GridManager : Node2D
             //Also, Instead of Vector2, Vector2I is used to restrict the coordinates to integers, which is necessary for indexing the grid array.
             Vector2I cell = GetCellFromWorld(mousePos);
 
-            if (IsCellOccupied(cell.X, cell.Y))
+            if (!IsInsideGrid(cell)) //Checks if the clicked cell is within the grid boundaries. If not, it ignores the click to prevent errors.
+                return;
+
+            if (!IsCellOccupied(cell))
             {
-                Vector2 spawnPos = GetWorldPositionFromCell(cell.X, cell.Y);
+                Vector2 spawnPos = GetWorldPositionFromCell(cell);
+
+                Tower tower = new Tower();
+                tower.Position = spawnPos;
+                AddChild(tower);  //This adds the tower to the scene tree in Godot, making it a child of the GridManager node. This is necessary for the tower to be rendered and updated in the game
+
+                PlaceTower(cell, tower);
+
                 GD.Print("Placed Tower at: " + spawnPos);
-                SetCellOccupied(cell.X, cell.Y);
             }
             else
             {
-                GD.Print("Cell already occupied!");
+                GD.Print("Tile already occupied!"); //Here cell refers to tile in game.
             }
         }
     }
@@ -117,21 +128,27 @@ public partial class GridManager : Node2D
         return new Vector2I(row, column);
     }
 
-    public Vector2 GetWorldPositionFromCell(int row, int column) //Funtion for converting grid cell coordinates back to world position, which is useful for placing towers at the center of the cell.
+    public Vector2 GetWorldPositionFromCell(Vector2I cell) //Funtion for converting grid cell coordinates back to world position, which is useful for placing towers at the center of the cell.
     {
-        float x = column * CellWidth + CellWidth / 2;
-        float y = row * CellHeight + CellHeight / 2;
+        float x = cell.Y * CellWidth + CellWidth / 2; // column -> cell.Y
+        float y = cell.X * CellHeight + CellHeight / 2; // row -> cell.X
 
         return new Vector2(x, y);
     }
 
-    public bool IsCellOccupied(int row, int column) //Function to check if a cell is occupied or not. It returns true if the cell is free (not occupied) and false if it is occupied.
+    public bool IsCellOccupied(Vector2I cell) //Function to check if a cell is occupied or not. It returns true if the cell is free (not occupied) and false if it is occupied.
     {
-        return !gridOccupied[row, column];
+        return towers[cell.X, cell.Y] != null;
     }
 
-    public void SetCellOccupied(int row, int column) //Function to mark a cell as occupied when a tower is placed. It sets the corresponding entry in the gridOccupied array to true, indicating that the cell is now occupied.
+    public void PlaceTower(Vector2I cell, Tower tower) //This Function is responsible for placing a tower in the grid. It takes the row and column indices along with the tower instance and updates the towers array to mark that cell as occupied by the tower.
     {
-        gridOccupied[row, column] = true;
+        towers[cell.X, cell.Y] = tower;
+    }
+
+    public bool IsInsideGrid(Vector2I cell) //Function to prevent crashes when clicking outside grid. It checks if the given row and column indices are within the bounds of the grid defined by Rows and Columns.
+    {
+        return cell.X >= 0 && cell.X < Rows &&
+           cell.Y >= 0 && cell.Y < Columns;
     }
 }
